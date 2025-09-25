@@ -3,10 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useContext, useState } from "react";
 import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { signOut, useSession } from "next-auth/react";
@@ -17,13 +13,13 @@ import { FaBars, FaTimes } from "react-icons/fa";
 export function Navbar() {
   const { count } = useContext(CountContext);
   const { data, status } = useSession();
-  const [isOpen, setIsOpen] = useState(false); 
+  const [isOpen, setIsOpen] = useState(false);
 
   const MenuItems: { path: string; content: string; Protected: boolean }[] = [
     { path: "/products", content: "Products", Protected: false },
     { path: "/category", content: "Category", Protected: false },
     { path: "/brands", content: "Brands", Protected: false },
-    { path: "/wishlist", content: "Wishlist", Protected: false },
+    { path: "/wishlist", content: "Wishlist", Protected: true },
     { path: "/allorders", content: "Orders", Protected: true },
   ];
 
@@ -62,7 +58,7 @@ export function Navbar() {
           {status === "authenticated" && (
             <Link href="/cart" className="relative">
               Cart
-              <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-amber-400 flex justify-center items-center text-xs">
+              <span className="absolute -top-1 -right-5 w-5 h-5 rounded-full bg-amber-400 flex justify-center items-center text-xs">
                 {count}
               </span>
             </Link>
@@ -104,7 +100,11 @@ export function Navbar() {
           {MenuItems.map((el) => {
             if (el.Protected && status !== "authenticated") return null;
             return (
-              <Link key={el.path} href={el.path} className={navigationMenuTriggerStyle()}>
+              <Link
+                key={el.path}
+                href={el.path}
+                className={navigationMenuTriggerStyle()}
+              >
                 {el.content}
               </Link>
             );
@@ -120,17 +120,16 @@ export function Navbar() {
           )}
 
           {status === "authenticated" ? (
-            <>
-              <span className="text-black">
-                hello <span className="category-color">{data?.user?.name}</span>
-              </span>
-              <button onClick={logout} className={navigationMenuTriggerStyle()}>
-                Logout
-              </button>
-            </>
+            <button onClick={logout} className={navigationMenuTriggerStyle()}>
+              Logout
+            </button>
           ) : (
             MenuAuthItems.map((el) => (
-              <Link key={el.path} href={el.path} className={navigationMenuTriggerStyle()}>
+              <Link
+                key={el.path}
+                href={el.path}
+                className={navigationMenuTriggerStyle()}
+              >
                 {el.content}
               </Link>
             ))
