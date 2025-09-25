@@ -1,5 +1,4 @@
 import React, { Suspense } from 'react'
-import { ProductData,product } from './../types/products.type';
 import  Image  from 'next/image';
 import {
   Card,
@@ -8,10 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import MainSlider from './_components/MainSlider/MainSlider';
-import Skeleton from './_components/Skeleton/Skeleton';
 import  Link  from 'next/link';
-import AddCartBtn from './_components/ProductCart/AddCartBtn';
+import Skeleton from 'image/app/_components/Skeleton/Skeleton';
+import AddCartBtn from 'image/app/_components/ProductCart/AddCartBtn';
+import { product, ProductData } from 'image/types/products.type';
 import ClientWish from 'image/ClientWish/ClientWish';
 
 
@@ -25,14 +24,12 @@ export default async function page() {
   return (
     <>
   <Suspense fallback={<Skeleton/>}>
-      <MainSlider />
  
-    <div className="grid lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-5 ">
+    <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-5">
     {
     productsList.map((el)=>{
       return  <Card key={el._id} className='relative' >
-        <ClientWish id={el._id}/>
-      
+ <ClientWish id={el._id}/>
 <Link href={`/products/${el._id}`} >
   <CardHeader>
            <Image className='w-full object-cover rounded-2xl' src={el.imageCover}   alt={el.title} width={200} height={100} />

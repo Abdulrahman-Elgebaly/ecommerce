@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
+import "@fortawesome/fontawesome-free/css/all.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import "./globals.css";
+import { Navbar } from "./_components/Navbar/Navbar";
+import { Toaster } from "@/components/ui/sonner";
+import Footer from "./_components/Footer/Footer";
+import UserProvider from "image/UserProvider";
+import CounterProvider from "image/CountProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const InterFont = Inter({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -24,10 +27,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${InterFont.className} flex flex-col min-h-screen`}>
+        <UserProvider>
+          <CounterProvider>
+  
+            <Navbar />
+
+    
+            <main className="flex-1 p-5">{children}</main>
+
+            <Toaster />
+
+            <Footer />
+          </CounterProvider>
+        </UserProvider>
       </body>
     </html>
   );
