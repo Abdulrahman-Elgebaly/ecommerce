@@ -17,7 +17,7 @@ import { FaBars, FaTimes } from "react-icons/fa";
 export function Navbar() {
   const { count } = useContext(CountContext);
   const { data, status } = useSession();
-  const [isOpen, setIsOpen] = useState(false); // للتحكم في فتح القائمة في الموبايل
+  const [isOpen, setIsOpen] = useState(false); 
 
   const MenuItems: { path: string; content: string; Protected: boolean }[] = [
     { path: "/products", content: "Products", Protected: false },
@@ -41,12 +41,10 @@ export function Navbar() {
   return (
     <nav className="shadow-2xl mb-5 p-5 bg-white">
       <div className="flex justify-between items-center max-w-full">
-        {/* Logo */}
         <Link href="/">
           <Image width={40} height={40} src="/logo.png" alt="logo" />
         </Link>
 
-        {/* Desktop Menu */}
         <div className="hidden md:flex space-x-4 items-center">
           {MenuItems.map((el) => {
             if (el.Protected && status !== "authenticated") return null;
@@ -71,7 +69,6 @@ export function Navbar() {
           )}
         </div>
 
-        {/* Auth / User Menu */}
         <div className="hidden md:flex space-x-4 items-center">
           {status === "authenticated" ? (
             <>
@@ -95,7 +92,6 @@ export function Navbar() {
           )}
         </div>
 
-        {/* Mobile Menu Button */}
         <div className="md:hidden">
           <button onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
@@ -103,7 +99,6 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden mt-4 flex flex-col space-y-2">
           {MenuItems.map((el) => {
